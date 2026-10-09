@@ -1,6 +1,8 @@
 'use client';
 
+
 import Image from 'next/image';
+import logo from '@/app/logo/logo.png';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React from 'react';
@@ -15,8 +17,8 @@ const Navbar = () => {
           
           <Link href="/" className="flex items-center gap-2 sm:gap-3">
             <Image
-              src="/logo/logo.png" 
-              alt="FITLOG Logo" 
+              src={logo} 
+              alt='FITLOG Logo'
               width={28} 
               height={28} 
               className="w-6 h-6 sm:w-7 sm:h-7 object-contain"
