@@ -17,7 +17,7 @@ const Hero = () => {
           </h1>
 
           <p className="text-zinc-400 text-sm sm:text-base max-w-xl leading-relaxed">
-            FitLog is a dark, no-nonsense gym companion: pick a lift, lock it into today&apos;s plan, and watch the week&apos;s work add up.
+            FitLog is a dark, no-nonsense gym companion: pick a lift, lock it <br className="hidden sm:inline" /> into today&apos;s plan, and watch the week&apos;s work add up.
           </p>
 
           <div className="pt-2">
