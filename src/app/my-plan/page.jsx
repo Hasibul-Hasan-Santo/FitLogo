@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
 import PlanStats from "@/app/component/planstats";
+import SortTabs from "../component/Sorttabs";
 
 export default function MyPlanPage() {
   const [activeTab, setActiveTab] = useState("todays");
@@ -25,6 +26,21 @@ export default function MyPlanPage() {
     return () => window.removeEventListener("storage", handleStorage);
   }, [loadPlanData]);
 
+  const handleSortChange = (e) => {
+    const value = e.target.value;
+    setSortBy(value);
+
+    let sorted = [...planItems];
+    if (value === "Duration") {
+      sorted.sort((a, b) => Number(a.duration || 0) - Number(b.duration || 0));
+    } else if (value === "Calories") {
+      sorted.sort((a, b) => Number(a.caloriesBurned || 0) - Number(b.caloriesBurned || 0));
+    } else if (value === "Name") {
+      sorted.sort((a, b) => String(a.name || "").localeCompare(String(b.name || "")));
+    }
+    setPlanItems(sorted);
+  };
+
   
 
 
@@ -47,6 +63,14 @@ export default function MyPlanPage() {
           totalMinutes={totalMinutes}
           totalCalories={totalCalories}
         />
+
+          <SortTabs
+         activeTab={activeTab}
+         setActiveTab={setActiveTab}
+         sortBy={sortBy}
+         onSortChange={handleSortChange}
+       />
+
       </div>
     </main>
   );
