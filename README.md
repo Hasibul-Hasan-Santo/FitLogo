@@ -1,36 +1,36 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 💪 FitLog — Workout Library & Gym Companion
 
-## Getting Started
+**FitLog** is a modern, dark-themed, and responsive fitness companion web application built for gym enthusiasts to explore workouts, manage daily fitness plans, and track personal fitness goals effortlessly.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🚀 Live Preview
+- **Live URL:** https://fit-logo-two.vercel.app/
+- **GitHub Repository:** https://github.com/Hasibul-Hasan-Santo/FitLogo
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## 🛠️ Technologies Used
+- **Framework:** [Next.js](https://nextjs.org/) (App Router)
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+- **UI Icons & Notifications:** Lucide React & React Hot Toast
+- **State Management:** React Hooks & LocalStorage Persistence
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## ✨ Key Features
+1. **Interactive Workout Library:** Browse a comprehensive collection of 12+ professional workouts covering major muscle groups with detailed specs (equipment, difficulty, duration, calories, and ratings).
+2. **Dynamic Workout Details Page:** Access specific exercise insights, step-by-step instructions, and target muscle tags via dynamic routing (`/workouts/[id]`).
+3. **Plan & Save Management:** Seamlessly add workouts to "Today's Plan" or "Saved for Later" with live counter badge updates in the navigation bar.
+4. **Interactive Log Dashboard (`/my-plan`):** Track daily fitness goals with live summary metrics (Exercises, Total Minutes, Calories Burned), "Mark as Done" status tracking, and instant removal actions.
+5. **Robust Error Handling & Fallbacks:** Protected API calls with fallback UI states ensuring the application never crashes during server downtime or network errors.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## ⚙️ Running Locally
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Follow these steps to run the project locally on your machine:
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. **Clone the repository:**
+   ```bash
+   git clone [https://github.com/Hasibul-Hasan-Santo/FitLogo.git](https://github.com/Hasibul-Hasan-Santo/FitLogo.git)

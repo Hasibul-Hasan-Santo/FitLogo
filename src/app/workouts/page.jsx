@@ -1,31 +1,43 @@
-import { Flame, Timer } from 'lucide-react';
+import { Flame, Star, Timer } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
 const getWorkouts = async () => {
   try {
     const response = await fetch("https://raw.githubusercontent.com/Hasibul-Hasan-Santo/fitapi/main/data.json", {
-      next: { revalidate: 3600 }, 
+      next: { revalidate: 3600 },
     });
-    
-    if (!response.ok) {
-      throw new Error(`Failed to fetch: ${response.status}`);
+
+    if (!response.ok) return [];
+
+    const text = await response.text();
+    if (text.trim().startsWith("<!doctype") || text.trim().startsWith("<html")) {
+      return [];
     }
 
-    const data = await response.json();
+    const data = JSON.parse(text);
     return Array.isArray(data) ? data : [];
   } catch (error) {
-    console.error("Error loading workouts:", error.message);
     return [];
   }
 };
 
-const WorkoutLibrary = async () => {
+export default async function WorkoutsPage() {
   const workouts = await getWorkouts();
   
+  if (!workouts || workouts.length === 0) {
+    return (
+      
+      <main className="min-h-screen w-full bg-[#0d0f12] py-24 px-4 flex flex-col items-center justify-center">
+        <p className="text-zinc-400 text-sm uppercase tracking-wider font-bold">
+          Data did not found
+        </p>
+      </main>
+    );
+  }
 
   return (
-    <section id="library" className="w-full bg-[#0d0f12] py-12 px-4 sm:px-8">
+    <main className="min-h-screen w-full bg-[#0d0f12] py-12 px-4 sm:px-8">
       <div className="max-w-7xl mx-auto space-y-8">
         
         <div className="space-y-1 border-b border-zinc-800 pb-6">
@@ -59,13 +71,13 @@ const WorkoutLibrary = async () => {
                   
                   <div className="flex items-center gap-1.5 flex-wrap">
                     {workout.muscleGroups?.map((group) => (
-  <span 
-    key={`${workout.id}-${group}`} 
-    className="text-[10px] font-black uppercase px-2.5 py-1 rounded bg-[#a3e635] text-black tracking-wide"
-  >
-    {group}
-  </span>
-))}
+                      <span 
+                        key={`${workout.id}-${group}`} 
+                        className="text-[10px] font-black uppercase px-2.5 py-1 rounded bg-[#a3e635] text-black tracking-wide"
+                      >
+                        {group}
+                      </span>
+                    ))}
                   </div>
 
                   <div>
@@ -90,11 +102,11 @@ const WorkoutLibrary = async () => {
                   <span>{workout.duration} min</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <span><Flame  className="w-4 h-4 text-amber-500 fill-amber-500"/></span>
+                  <span><Flame className="w-4 h-4 text-amber-500 fill-amber-500"/></span>
                   <span>{workout.caloriesBurned} kcal</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <span className="text-amber-400">★</span>
+                  <span className="text-amber-400"><Star className="w-4 h-4 text-amber-500 fill-amber-500" /> <span className="text-white"/></span>
                   <span className="text-white font-bold">{workout.rating}</span>
                 </div>
               </div>
@@ -104,8 +116,6 @@ const WorkoutLibrary = async () => {
         </div>
 
       </div>
-    </section>
+    </main>
   );
-};
-
-export default WorkoutLibrary;
+}
