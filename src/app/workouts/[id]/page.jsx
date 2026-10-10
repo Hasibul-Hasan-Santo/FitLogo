@@ -60,7 +60,7 @@ export default async function WorkoutDetailPage({ params }) {
             <div className="flex justify-between p-3.5"><span className="text-zinc-400">REPS</span><span className="font-bold">{workout.reps}</span></div>
             <div className="flex justify-between p-3.5"><span className="text-zinc-400">DURATION</span><span className="font-bold">{workout.duration} min</span></div>
             <div className="flex justify-between p-3.5"><span className="text-zinc-400">CALORIES</span><span className="font-bold">{workout.caloriesBurned} kcal</span></div>
-            <div className="flex justify-between p-3.5"><span className="text-zinc-400">RATING</span><span className="font-bold">{workout.rating} </span></div>
+            <div className="flex justify-between p-3.5"><span className="text-zinc-400">RATING</span><span className="font-bold">{workout.rating} ★</span></div>
           </div>
 
           
