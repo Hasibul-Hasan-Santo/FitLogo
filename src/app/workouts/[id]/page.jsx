@@ -7,7 +7,7 @@ const getWorkoutDetails = async (id) => {
   if (!id) return null;
 
   try {
-    const res = await fetch("https://raw.githubusercontent.com/Hasibul-Hasan-Santo/fitapi/main/data.json", {
+    const res = await fetch("https://api.abcz.workers.dev/api/fitlog", {
       next: { revalidate: 3600 }, 
     });
 

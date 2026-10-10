@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 const getWorkouts = async () => {
   try {
-    const response = await fetch("https://raw.githubusercontent.com/Hasibul-Hasan-Santo/fitapi/main/data.json", {
+    const response = await fetch("https://api.abcz.workers.dev/api/fitlog", {
       next: { revalidate: 3600 },
     });
 

@@ -26,8 +26,3 @@
 5. **Robust Error Handling & Fallbacks:** Protected API calls with fallback UI states ensuring the application never crashes during server downtime or network errors.
 
 ---
-
-## ⚙️ Running Locally
-
-Follow these steps to run the project locally on your machine:
-
