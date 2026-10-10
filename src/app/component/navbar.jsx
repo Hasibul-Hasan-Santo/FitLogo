@@ -30,7 +30,7 @@ const Navbar = () => {
 
           <nav className="flex items-center gap-1 sm:gap-2 order-3 sm:order-2 w-full sm:w-auto justify-center">
             <Link
-              href="/homepage"
+              href="/workouts"
               className={`px-4 sm:px-5 py-1.5 sm:py-2 rounded-full font-medium text-xs sm:text-sm transition-all ${
                 pathname === '/homepage'
                   ? 'bg-[#1e290e] text-[#a3e635]'

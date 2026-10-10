@@ -2,9 +2,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 const getWorkouts = async () => {
-  const response = await fetch("https://raw.githubusercontent.com/Hasibul-Hasan-Santo/fitapi/main/data.json");
+  const response = await fetch("https://api.abcz.workers.dev/api/fitlog");
   const data = await response.json();
-  return data.data;
+  return data;
 };
 
 const WorkoutLibrary = async () => {
@@ -38,7 +38,7 @@ const WorkoutLibrary = async () => {
                     alt={workout.name}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="object-cover object-center group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
 
@@ -46,10 +46,13 @@ const WorkoutLibrary = async () => {
                   
                   <div className="flex items-center gap-1.5 flex-wrap">
                     {workout.muscleGroups?.map((group) => (
-                      <span key={group.id} className="text-[10px] font-black uppercase px-2.5 py-1 rounded bg-[#a3e635] text-black tracking-wide">
-                        {group}
-                      </span>
-                    ))}
+  <span 
+    key={`${workout.id}-${group}`} 
+    className="text-[10px] font-black uppercase px-2.5 py-1 rounded bg-[#a3e635] text-black tracking-wide"
+  >
+    {group}
+  </span>
+))}
                   </div>
 
                   <div>

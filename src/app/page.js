@@ -1,5 +1,5 @@
-import Hero from '@/app/homepage/hero';
-import WorkoutLibrary from '@/app/homepage/page'
+import Hero from '@/app/workouts/hero';
+import WorkoutLibrary from '@/app/workouts/page'
 
 export default function Home() {
   return (
