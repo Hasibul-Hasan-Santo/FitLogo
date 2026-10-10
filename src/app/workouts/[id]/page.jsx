@@ -3,9 +3,26 @@ import Link from 'next/link';
 import WorkoutActions from '@/app/component/WorkoutActions';
 
 const getWorkoutDetails = async (id) => {
-  const res = await fetch("https://api.abcz.workers.dev/api/fitlog");
-  const workouts = await res.json();
-  return workouts.find((item) => String(item.id) === String(id));
+  if (!id) return null;
+
+  try {
+    const res = await fetch("https://raw.githubusercontent.com/Hasibul-Hasan-Santo/fitapi/main/data.json", {
+      next: { revalidate: 3600 }, 
+    });
+
+    if (!res.ok) {
+      throw new Error(`Failed to fetch: ${res.status}`);
+    }
+
+    const workouts = await res.json();
+    
+    if (!Array.isArray(workouts)) return null;
+
+    return workouts.find((item) => String(item.id) === String(id)) || null;
+  } catch (error) {
+    console.error("Error fetching workout details:", error.message);
+    return null;
+  }
 };
 
 export default async function WorkoutDetailPage({ params }) {

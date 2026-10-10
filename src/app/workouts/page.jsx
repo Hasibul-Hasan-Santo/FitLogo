@@ -1,10 +1,23 @@
+import { Flame, Timer } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
 const getWorkouts = async () => {
-  const response = await fetch("https://api.abcz.workers.dev/api/fitlog");
-  const data = await response.json();
-  return data;
+  try {
+    const response = await fetch("https://raw.githubusercontent.com/Hasibul-Hasan-Santo/fitapi/main/data.json", {
+      next: { revalidate: 3600 }, 
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Failed to fetch: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return Array.isArray(data) ? data : [];
+  } catch (error) {
+    console.error("Error loading workouts:", error.message);
+    return [];
+  }
 };
 
 const WorkoutLibrary = async () => {
@@ -73,11 +86,11 @@ const WorkoutLibrary = async () => {
 
               <div className="flex items-center justify-between text-xs text-zinc-400 p-5 pt-3 border-t border-zinc-800/80 font-medium">
                 <div className="flex items-center gap-1.5">
-                  <span>⏱</span>
+                  <span><Timer className="w-4 h-4 text-amber-500 fill-amber-500" /></span>
                   <span>{workout.duration} min</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <span>🔥</span>
+                  <span><Flame  className="w-4 h-4 text-amber-500 fill-amber-500"/></span>
                   <span>{workout.caloriesBurned} kcal</span>
                 </div>
                 <div className="flex items-center gap-1.5">

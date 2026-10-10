@@ -2,19 +2,29 @@
 import { useState, useEffect, useCallback } from "react";
 import PlanStats from "@/app/component/planstats";
 import SortTabs from "../component/Sorttabs";
+import PlanList from "../component/planlist";
+import toast from "react-hot-toast";
 
 export default function MyPlanPage() {
   const [activeTab, setActiveTab] = useState("todays");
   const [sortBy, setSortBy] = useState("Duration");
   const [planItems, setPlanItems] = useState([]);
 
-
   const loadPlanData = useCallback(() => {
     if (typeof window === "undefined") return;
     const key = activeTab === "todays" ? "fitlog_plan" : "fitlog_saved";
-    const savedData = JSON.parse(localStorage.getItem(key) || "[]");
-    setPlanItems(savedData);
-  }, [activeTab]);
+    let data = JSON.parse(localStorage.getItem(key) || "[]");
+
+    if (sortBy === "Duration") {
+      data.sort((a, b) => Number(a.duration || 0) - Number(b.duration || 0));
+    } else if (sortBy === "Calories") {
+      data.sort((a, b) => Number(a.caloriesBurned || 0) - Number(b.caloriesBurned || 0));
+    } else if (sortBy === "Name") {
+      data.sort((a, b) => String(a.name || "").localeCompare(String(b.name || "")));
+    }
+
+    setPlanItems(data);
+  }, [activeTab, sortBy]);
 
   useEffect(() => {
     queueMicrotask(() => {
@@ -27,24 +37,37 @@ export default function MyPlanPage() {
   }, [loadPlanData]);
 
   const handleSortChange = (e) => {
-    const value = e.target.value;
-    setSortBy(value);
-
-    let sorted = [...planItems];
-    if (value === "Duration") {
-      sorted.sort((a, b) => Number(a.duration || 0) - Number(b.duration || 0));
-    } else if (value === "Calories") {
-      sorted.sort((a, b) => Number(a.caloriesBurned || 0) - Number(b.caloriesBurned || 0));
-    } else if (value === "Name") {
-      sorted.sort((a, b) => String(a.name || "").localeCompare(String(b.name || "")));
-    }
-    setPlanItems(sorted);
+    setSortBy(e.target.value);
   };
 
   
+  const handleMarkAsDone = (id) => {
+    const itemToRemove = planItems.find((item) => String(item.id) === String(id));
+    const updated = planItems.filter((item) => String(item.id) !== String(id));
+    
+    setPlanItems(updated);
+    const key = activeTab === "todays" ? "fitlog_plan" : "fitlog_saved";
+    localStorage.setItem(key, JSON.stringify(updated));
+    window.dispatchEvent(new Event("storage"));
 
+    toast.success(`Great job! "${itemToRemove?.name || 'Workout'}" completed!`, {
+      style: { background: '#10B981', color: '#fff' },
+    });
+  };
 
   
+  const handleRemove = (id) => {
+    const itemToRemove = planItems.find((item) => String(item.id) === String(id));
+    const updated = planItems.filter((item) => String(item.id) !== String(id));
+    
+    setPlanItems(updated);
+    const key = activeTab === "todays" ? "fitlog_plan" : "fitlog_saved";
+    localStorage.setItem(key, JSON.stringify(updated));
+    window.dispatchEvent(new Event("storage"));
+
+    toast.error(`${itemToRemove?.name || 'Workout'} removed from your list! `);
+  };
+
   const totalExercises = planItems.length;
   const totalMinutes = planItems.reduce(
     (acc, item) => acc + Number(item.duration || 0),
@@ -64,13 +87,19 @@ export default function MyPlanPage() {
           totalCalories={totalCalories}
         />
 
-          <SortTabs
-         activeTab={activeTab}
-         setActiveTab={setActiveTab}
-         sortBy={sortBy}
-         onSortChange={handleSortChange}
-       />
+        <SortTabs
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          sortBy={sortBy}
+          onSortChange={handleSortChange}
+        />
 
+        <PlanList
+          planItems={planItems}
+          activeTab={activeTab}
+          onToggleDone={handleMarkAsDone}
+          onRemove={handleRemove}
+        />
       </div>
     </main>
   );

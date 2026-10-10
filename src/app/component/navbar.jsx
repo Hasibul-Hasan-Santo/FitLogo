@@ -1,6 +1,6 @@
 'use client';
 
-
+import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import logo from '@/app/logo/logo.png';
 import Link from 'next/link';
@@ -9,6 +9,30 @@ import React from 'react';
 
 const Navbar = () => {
   const pathname = usePathname();
+  const [planCount, setPlanCount] = useState(0);
+  const [savedCount, setSavedCount] = useState(0);
+
+  const updateCounts = useCallback(() => {
+    if (typeof window === 'undefined') return;
+    
+    const plan = JSON.parse(localStorage.getItem('fitlog_plan') || '[]');
+    const saved = JSON.parse(localStorage.getItem('fitlog_saved') || '[]');
+    
+    setPlanCount(plan.length);
+    setSavedCount(saved.length);
+  }, []);
+
+  useEffect(() => {
+    queueMicrotask(() => {
+      updateCounts();
+    });
+
+    window.addEventListener('storage', updateCounts);
+    
+    return () => {
+      window.removeEventListener('storage', updateCounts);
+    };
+  }, [updateCounts]);
 
   return (
     <div>
@@ -32,7 +56,7 @@ const Navbar = () => {
             <Link
               href="/workouts"
               className={`px-4 sm:px-5 py-1.5 sm:py-2 rounded-full font-medium text-xs sm:text-sm transition-all ${
-                pathname === '/homepage'
+                pathname === '/workouts' || pathname.startsWith('/workouts/')
                   ? 'bg-[#1e290e] text-[#a3e635]'
                   : 'text-white hover:text-zinc-300'
               }`}
@@ -58,7 +82,7 @@ const Navbar = () => {
                 Plan
               </span>
               <span className="bg-[#a3e635] text-black text-[10px] sm:text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">
-                0
+                {planCount}
               </span>
             </Link>
 
@@ -66,8 +90,8 @@ const Navbar = () => {
               <span className="text-xs sm:text-sm font-medium text-zinc-300 group-hover:text-white">
                 Saved
               </span>
-              <span className="border border-zinc-700 text-zinc-400 text-[10px] sm:text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center group-hover:border-zinc-500 group-hover:text-zinc-200">
-                0
+              <span className="border border-zinc-700 bg-zinc-900 text-zinc-200 text-[10px] sm:text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center group-hover:border-zinc-500">
+                {savedCount}
               </span>
             </Link>
           </div>
