@@ -2,6 +2,7 @@ import React from 'react';
 import BannerImage from '@/app/logo/banner.png';
 import Image from 'next/image';
 
+import Link from 'next/link';
 const Hero = () => {
   return (
     <section className="w-full bg-[#0d0f12] py-10 md:py-16 px-4 sm:px-6">
@@ -21,12 +22,12 @@ const Hero = () => {
           </p>
 
           <div className="pt-2">
-            <a 
-              href="#library" 
+            <Link 
+              href="/workouts" 
               className="inline-flex items-center gap-2 bg-[#a3e635] hover:bg-[#8ece28] text-black font-extrabold px-6 py-3 rounded-md transition-all text-sm uppercase tracking-wide scroll-smooth"
             >
               BROWSE WORKOUTS
-            </a>
+            </Link>
           </div>
         </div>
 

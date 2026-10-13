@@ -25,17 +25,24 @@ const getWorkouts = async () => {
 export default async function WorkoutsPage() {
   const workouts = await getWorkouts();
   
-  if (!workouts || workouts.length === 0) {
-    return (
-      
-      <main className="min-h-screen w-full bg-[#0d0f12] py-24 px-4 flex flex-col items-center justify-center">
-        <p className="text-zinc-400 text-sm uppercase tracking-wider font-bold">
-          Data did not found
+ if (!workouts || workouts.length === 0) {
+  return (
+    <main className="min-h-screen w-full bg-[#0d0f12] pt-8 px-4 flex flex-col items-center">
+      <div className="w-full max-w-7xl space-y-1 border-b border-zinc-800 pb-6 mb-8 text-left">
+        <h2 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-white">
+          THE LIBRARY
+        </h2>
+        <p className="text-zinc-400 text-xs sm:text-sm">
+          Twelve lifts covering every major muscle group.
         </p>
-      </main>
-    );
-  }
+      </div>
 
+      <p className="text-zinc-400 text-sm uppercase tracking-wider font-bold">
+        Data did not found
+      </p>
+    </main>
+  );
+}
   return (
     <main className="min-h-screen w-full bg-[#0d0f12] py-12 px-4 sm:px-8">
       <div className="max-w-7xl mx-auto space-y-8">
