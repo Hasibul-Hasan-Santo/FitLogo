@@ -46,7 +46,7 @@ export default async function WorkoutDetailPage({ params }) {
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
         
         
-        <div className="relative w-full h-[400px] sm:h-[550px] bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-800">
+        <div className="relative w-full h-100 sm:h-137.5 bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-800">
           <Image 
             src={workout.image} 
             alt={workout.name} 
